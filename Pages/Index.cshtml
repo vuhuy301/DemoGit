@@ -1,0 +1,247 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<style>
+	.original-price {
+		text-decoration: line-through;
+		color: #888;
+		margin-right: 10px;
+	}
+</style>
+<!-- Start Hero Section -->
+<div class="hero">
+	<div class="container">
+		<div class="row justify-content-between">
+			<div class="col-lg-5">
+				<div class="intro-excerpt">
+					<h1 style="color: rgb(83, 83, 83);">Billiard <span clsas="d-block">Style</span></h1>
+					<p style="color: rgb(102, 102, 102);" class="mb-4">Mang đến những chiếc áo thật là phong cách.</p>
+					<p><a href="" class="btn btn-secondary me-2">Shop Now</a>
+				</div>
+			</div>
+			<div class="col-lg-7">
+				<div class="hero-img-wrap">
+					<img class="zoom-img" style="width: 650px;" src="/images/bannerao.png" alt="" srcset="">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Hero Section -->
+<!-- Start Product Section -->
+<div class="product-section">
+	<div class="container">
+		<div class="row">
+
+			<!-- Start Column 1 -->
+			<div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
+				<h2 class="mb-4 section-title">Những chiếc áo thật "ĐỘC"</h2>
+				<p class="mb-4">Cơ thủ băn khoăn tìm đặt Áo Bida thiết kế đẹp, độc, không đụng hàng cho team và quán Billiard của mình? </p>
+				<p><a href="shop.html" class="btn">Tìm hiểu</a></p>
+			</div>
+			@foreach (var product in Model.Products)
+			{
+				<!-- Start Column 1 -->
+				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+					<a class="product-item" href="/Shop/ProductDetail?Pid=@product.Pid">
+						<img src="@product.ProductImgs.FirstOrDefault()?.Url" class="img-fluid product-thumbnail">
+						<h3 class="product-title">@product.Pname</h3>
+						<span class="original-price text-muted">@String.Format("{0:0,0}", @product.Price) đ</span>
+						<strong class="product-price">@String.Format("{0:0,0}", @product.Price*(100-@product.Sale)/100) đ</strong>
+						<span class="icon-cross">
+							<img src="/images/cross.svg" class="img-fluid">
+						</span>
+					</a>
+				</div>
+			}
+		</div>
+	</div>
+</div>
+<!-- End Product Section -->
+<!-- Start Why Choose Us Section -->
+<div class="why-choose-section">
+	<div class="container">
+		<div class="row justify-content-between">
+			<div class="col-lg-6">
+				<h2 class="section-title">Tại sao lựa chọn chúng tôi?</h2>
+				<p>Rất nhiều các cơ thủ trên khắp cả nước đã lựa chọn áo đấu đến từ nhà BIS.</p>
+
+				<div class="row my-5">
+					<div class="col-6 col-md-6">
+						<div class="feature">
+							<div class="icon">
+								<img src="/images/truck.svg" alt="Image" class="imf-fluid">
+							</div>
+							<h3>Fast &amp; Free Shipping</h3>
+							<p>Giao hàng nhanh - Miễn phí phí vận chuyển.</p>
+						</div>
+					</div>
+
+					<div class="col-6 col-md-6">
+						<div class="feature">
+							<div class="icon">
+								<img src="/images/bag.svg" alt="Image" class="imf-fluid">
+							</div>
+							<h3>Easy to Shop</h3>
+							<p>Dễ dàng mua hàng mọi lúc, mọi nơi.</p>
+						</div>
+					</div>
+
+					<div class="col-6 col-md-6">
+						<div class="feature">
+							<div class="icon">
+								<img src="/images/support.svg" alt="Image" class="imf-fluid">
+							</div>
+							<h3>Support</h3>
+							<p>Hỗ trợ khách hàng tận tâm.</p>
+						</div>
+					</div>
+
+					<div class="col-6 col-md-6">
+						<div class="feature">
+							<div class="icon">
+								<img src="/images/return.svg" alt="Image" class="imf-fluid">
+							</div>
+							<h3>Hassle Free Returns</h3>
+							<p>Đổi trả hàng lỗi dễ dàng, miễn phí.</p>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="col-lg-5">
+				<div class="img-wrap">
+					<img src="https://ofd.vn/FileStorage/Storage/MisaProduct/img/ao-bida-thiet-ke-12-_202414115157.png" alt="Image" class="img-fluid">
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- End Why Choose Us Section -->
+<!-- Start We Help Section -->
+<div class="we-help-section">
+	<div class="container">
+		<div class="row justify-content-between">
+			<div class="col-lg-7 mb-5 mb-lg-0">
+				<div class="imgs-grid">
+					<div class="grid grid-1"><img src="https://img.lazcdn.com/g/p/c8949e59fcc9127b87108bac64a82cb3.png_720x720q80.png" alt="Untree.co"></div>
+					<div class="grid grid-2"><img src="https://filebroker-cdn.lazada.vn/kf/Sf16d0e698a02490bb18a437017341b0bW.jpg" alt="Untree.co"></div>
+					<div class="grid grid-3"><img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-luuz0u21plid1e" alt="Untree.co"></div>
+				</div>
+			</div>
+			<div class="col-lg-5 ps-lg-5">
+				<h2 class="section-title mb-4">Chúng tôi giúp bạn thiết kế áo theo phong cách riêng.</h2>
+				<p>Nếu bạn có những ý tưởng riêng về chiếc áo của mình, hãy liên hệ với cúng tôi để cùng thực hiện ý tưởng ngay nào!</p>
+
+				<ul class="list-unstyled custom-list my-4">
+					<li>Quyết định loại áo đấu bạn muốn thiết kế.</li>
+					<li>Tự do chọn màu sắc, logo, tên, và các chi tiết khác theo ý thích.</li>
+					<li>Xác định loại vải và chất liệu bạn muốn sử dụng cho áo đấu. </li>
+				</ul>
+				<p><a herf="#" class="btn">Đặt ngay tại đây</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End We Help Section -->
+<!-- Start Testimonial Slider -->
+<div class="testimonial-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-7 mx-auto text-center">
+				<h2 class="section-title">VỀ CHÚNG TÔI</h2>
+			</div>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="col-lg-12">
+				<div class="testimonial-slider-wrap text-center">
+
+					<div id="testimonial-nav">
+						<span class="prev" data-controls="prev"><span class="fa fa-chevron-left"></span></span>
+						<span class="next" data-controls="next"><span class="fa fa-chevron-right"></span></span>
+					</div>
+
+					<div class="testimonial-slider">
+
+						<div class="item">
+							<div class="row justify-content-center">
+								<div class="col-lg-8 mx-auto">
+
+									<div class="testimonial-block text-center">
+										<blockquote class="mb-5">
+											<p>&ldquo;Sứ mệnh của chúng tôi là thiết kế, sản xuất và cung cấp áo và phụ kiện bida chất lượng cao, hợp thời trang với mức giá phù hợp, đáp ứng nhu cầu của khách hàng, đồng thời thúc đẩy văn hóa đổi mới, chất lượng và sự hài lòng của khách hàng.&rdquo;</p>
+										</blockquote>
+
+										<div class="author-info">
+											<div class="author-pic">
+												<img src="/images/person-1.png" alt="Maria Jones" class="img-fluid">
+											</div>
+											<h3 class="font-weight-bold">Thanh Tùng</h3>
+											<span class="position d-block mb-3">CEO, Co-Founder, BIS.</span>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<!-- END item -->
+
+						<div class="item">
+							<div class="row justify-content-center">
+								<div class="col-lg-8 mx-auto">
+
+									<div class="testimonial-block text-center">
+										<blockquote class="mb-5">
+											<p>&ldquo;Sứ mệnh của chúng tôi là thiết kế, sản xuất và cung cấp áo và phụ kiện bida chất lượng cao, hợp thời trang với mức giá phù hợp, đáp ứng nhu cầu của khách hàng, đồng thời thúc đẩy văn hóa đổi mới, chất lượng và sự hài lòng của khách hàng.&rdquo;</p>
+										</blockquote>
+
+										<div class="author-info">
+											<div class="author-pic">
+												<img src="/images/person-1.png" alt="Maria Jones" class="img-fluid">
+											</div>
+											<h3 class="font-weight-bold">Vũ Huy</h3>
+											<span class="position d-block mb-3">CEO, Co-Founder, BIS.</span>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<!-- END item -->
+
+						<div class="item">
+							<div class="row justify-content-center">
+								<div class="col-lg-8 mx-auto">
+
+									<div class="testimonial-block text-center">
+										<blockquote class="mb-5">
+											<p>&ldquo;Sứ mệnh của chúng tôi là thiết kế, sản xuất và cung cấp áo và phụ kiện bida chất lượng cao, hợp thời trang với mức giá phù hợp, đáp ứng nhu cầu của khách hàng, đồng thời thúc đẩy văn hóa đổi mới, chất lượng và sự hài lòng của khách hàng.&rdquo;</p>
+										</blockquote>
+
+										<div class="author-info">
+											<div class="author-pic">
+												<img src="/images/person-1.png" alt="Maria Jones" class="img-fluid">
+											</div>
+											<h3 class="font-weight-bold">Yến Chi</h3>
+											<span class="position d-block mb-3">CEO, Co-Founder, BIS.</span>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<!-- END item -->
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

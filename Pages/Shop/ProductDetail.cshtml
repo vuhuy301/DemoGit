@@ -1,0 +1,320 @@
+﻿@page
+@model BilliardShop.Pages.Shop.ProductDetailModel
+@{
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+</head>
+<style>
+ 
+    .product-container {
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+
+    .product-container {
+        padding-top: 120px;
+    }
+
+    .product-images .main-image img {
+        width: 100%;
+        height: auto;
+    }
+
+    .thumbnail-images img {
+        width: 80px;
+        height: auto;
+        margin-right: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .product-details h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .original-price {
+        text-decoration: line-through;
+        color: #888;
+        margin-right: 10px;
+    }
+
+    .discounted-price {
+        color: #e60000;
+        font-size: 18px;
+        margin-right: 10px;
+        font-weight: 600;
+    }
+
+    .discount {
+        color: #ff6600;
+        font-weight: bold;
+    }
+
+    .add-to-bag-btn {
+        background-color: #000;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin-right: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+        border: 1px solid white;
+    }
+
+        .add-to-bag-btn:hover {
+            background-color: #ffffff;
+            color: #000;
+            border: 1px solid black;
+        }
+
+    .size-option.selected {
+        background-color: #000; /* Màu nền khi được chọn */
+        color: white; /* Đổi màu chữ để tương phản với nền */
+    }
+
+    .price .original-price {
+        text-decoration: line-through;
+    }
+
+    .price .discounted-price {
+        font-size: 1.5rem;
+    }
+
+    .size-option {
+        padding: 6px 20px;
+        margin: 5px;
+        border: 1px solid #ccc;
+        background-color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border-radius: 5px;
+        color: black;
+    }
+
+     .size-option:hover {
+            background-color: #000;
+            color: #ddd;
+            font-weight: 700;
+     }
+
+    .choose-size {
+        font-size: 14px;
+        color: #000;
+    }
+
+    .size-option.disabled {
+        opacity: 0.5; 
+        pointer-events: none; 
+        cursor: not-allowed; 
+        text-decoration: line-through;
+    }
+    /* Modal default hidden */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+    }
+
+    /* Modal content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+    }
+
+    /* Close button */
+    .close-button {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    /* Size guide image */
+    .size-guide-image {
+        width: 100%;
+        height: auto;
+    }
+
+</style>
+<body>
+    <div>
+        <div class="container product-container">
+            <div class="row">
+                <!-- Product Images Section -->
+                <div class="col-lg-6 col-md-12 product-images">
+                    <div class="main-image">
+                        <img src="@Model.Product.ProductImgs.First().Url" alt="LOOSE ZIP HOODIE - GRAY" class="img-fluid">
+                    </div>
+                    <div class="thumbnail-images d-flex mt-3">
+                        @foreach (var img in Model.Product.ProductImgs)
+                        {
+                            <img src="@img.Url" alt="LOOSE ZIP HOODIE - GRAY" class="img-thumbnail">
+                        }
+
+
+                    </div>
+                </div>
+
+                <!-- Product Details Section -->
+                <div class="col-lg-6 col-md-12 product-details">
+                    <h1>@Model.Product.Pname</h1>
+                    <div class="price">
+                        <span class="discounted-price text-danger font-weight-bold ml-3">@String.Format("{0:0,0}", @Model.Product.Price*(100-Model.Product.Sale)/100) đ</span>
+                        <span class="original-price text-muted">@String.Format("{0:0,0}", @Model.Product.Price) đ</span>
+                        <span class="discount text-warning font-weight-bold ml-2">@Model.Product.Sale% OFF</span>
+                    </div>
+                    @if(Model.Product.Cid == 1)
+                    {
+                        <div class="sizes mt-3">
+                            <p>Please select size</p>
+                            <div class="size-options">
+                                @foreach (var ps in Model.prosize)
+                                {
+                                    string disabledClass = ps.Quantity == 0 ? "disabled" : "";
+                                    <button class="size-option btn btn-outline-secondary ml-2 @disabledClass" data-size="@ps.SidNavigation.Sid">@ps.SidNavigation.Sname</button>
+                                }
+
+                            </div>
+                            @if (TempData["Message"] != null)
+                            {
+                                <div class="">
+                                    @TempData["Message"]
+                                </div>
+                            }
+                            <a class="choose-size" href="#" onclick="showSizeGuide(); return false;">Hướng dẫn chọn size</a>
+                        </div>
+                    }
+                   
+                    <div class="action-buttons mt-4">
+                        <form method="post" asp-page-handler="ProductDetails">
+                            <input type="hidden" name="ProductId" value="@Model.Product.Pid" />
+                            <input type="hidden" name="Size" class="Size" value="" />
+                            @if (Model.Product.Cid == 1)
+                            {
+                                <input type="hidden" name="type" value="aodau" />
+                            }
+                            else
+                            {
+                                <input type="hidden" name="type" value="phukien" />
+                            }
+                            <button type="submit" class="add-to-bag-btn btn btn-dark">Thêm vào giỏ hàng</button>
+                        </form>
+                        <form method="get" asp-page="/Shop/Checkout" asp-page-handler="Checkout">
+                            <input type="hidden" name="ProductId" value="@Model.Product.Pid" />
+                            <input type="hidden" name="Size" class="Size" value="" />
+                            @if(Model.Product.Cid == 1)
+                            {
+                                <input type="hidden" name="type" value="aodau" />
+                            }else{
+                                <input type="hidden" name="type" value="phukien" />
+                            }
+                            <input type="hidden" name="type" value="single"/>
+                            <button class="add-to-bag-btn btn btn-dark">Mua ngay</button>
+                        </form>
+                        
+                    </div>
+                    <div class="product-description mt-4">
+                        <p>@Html.Raw(@Model.Product.Pdes.Replace("\\n", "<br>"))</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="sizeGuideModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeSizeGuide();">&times;</span>
+                <img src="https://file.hstatic.net/1000344185/file/z5666593810176_19674b4f1455a18f6ca81bcfc385cdcb_158c89e1a4314f18b71839aef3844946_grande.jpg" alt="Size Guide" class="size-guide-image">
+            </div>
+        </div>
+
+    </div>
+    
+
+
+    <script src="scripts.js"></script>
+</body>
+<script>
+    const sizeOptions = document.querySelectorAll('.size-option');
+
+    sizeOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            // Xóa lớp "selected" khỏi tất cả các tùy chọn kích thước
+            sizeOptions.forEach(opt => opt.classList.remove('selected'));
+            // Thêm lớp "selected" vào tùy chọn kích thước được nhấp
+            this.classList.add('selected');
+            const selectedSize = this.getAttribute('data-size');
+            document.querySelectorAll('.Size').forEach(function (element) {
+                element.value = selectedSize;
+            });
+
+        });
+    });
+    const thumbnails = document.querySelectorAll('.thumbnail-images img');
+    const mainImage = document.querySelector('.main-image img');
+    let currentIndex = 0;
+
+    function showNextImage() {
+        currentIndex = (currentIndex + 1) % thumbnails.length;
+        mainImage.src = thumbnails[currentIndex].src;
+    }
+
+    thumbnails.forEach((thumbnail, index) => {
+        thumbnail.addEventListener('click', function() {
+            mainImage.src = this.src;
+            currentIndex = index; // Cập nhật chỉ số hiện tại khi người dùng nhấp vào hình ảnh
+        });
+    });
+
+    // Tự động chuyển ảnh sau mỗi 3 giây
+    setInterval(showNextImage, 3000);
+
+    function showSizeGuide() {
+        document.getElementById("sizeGuideModal").style.display = "block";
+    }
+
+    function closeSizeGuide() {
+        document.getElementById("sizeGuideModal").style.display = "none";
+    }
+
+    // Optional: Close modal when clicking outside of it
+    window.onclick = function (event) {
+        var modal = document.getElementById("sizeGuideModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+</script>
+</html>

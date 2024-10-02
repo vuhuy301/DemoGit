@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\bag.svg" />
+    <None Include="wwwroot\images\bannerao.png" />
+    <None Include="wwwroot\images\bowl-2.png" />
+    <None Include="wwwroot\images\bowl-3.png" />
+    <None Include="wwwroot\images\cart.svg" />
+    <None Include="wwwroot\images\couch.png" />
+    <None Include="wwwroot\images\cross.svg" />
+    <None Include="wwwroot\images\dots-green.svg" />
+    <None Include="wwwroot\images\dots-light.svg" />
+    <None Include="wwwroot\images\dots-yellow.svg" />
+    <None Include="wwwroot\images\envelope-outline.svg" />
+    <None Include="wwwroot\images\img-grid-1.jpg" />
+    <None Include="wwwroot\images\img-grid-2.jpg" />
+    <None Include="wwwroot\images\img-grid-3.jpg" />
+    <None Include="wwwroot\images\person-1.jpg" />
+    <None Include="wwwroot\images\person-1.png" />
+    <None Include="wwwroot\images\person_1.jpg" />
+    <None Include="wwwroot\images\person_2.jpg" />
+    <None Include="wwwroot\images\person_3.jpg" />
+    <None Include="wwwroot\images\person_4.jpg" />
+    <None Include="wwwroot\images\post-1.jpg" />
+    <None Include="wwwroot\images\post-2.jpg" />
+    <None Include="wwwroot\images\post-3.jpg" />
+    <None Include="wwwroot\images\poster.jpg" />
+    <None Include="wwwroot\images\product-1.png" />
+    <None Include="wwwroot\images\product-2.png" />
+    <None Include="wwwroot\images\product-3.png" />
+    <None Include="wwwroot\images\return.svg" />
+    <None Include="wwwroot\images\sofa.png" />
+    <None Include="wwwroot\images\support.svg" />
+    <None Include="wwwroot\images\truck.svg" />
+    <None Include="wwwroot\images\user.svg" />
+    <None Include="wwwroot\images\why-choose-us-img.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.29">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.29" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.29">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

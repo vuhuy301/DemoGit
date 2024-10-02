@@ -1,0 +1,196 @@
+﻿@page
+@model BilliardShop.Pages.Shop.CheckoutCartModel
+@{
+}
+
+<style>
+	.payment-option {
+		width: 100% !important;
+		display: flex;
+		align-items: center;
+		border: 1px solid #ced4da;
+		padding: 10px;
+		border-radius: 10px;
+		width: fit-content;
+		margin-bottom: 10px;
+	}
+
+		.payment-option input[type="radio"] {
+			margin-right: 10px;
+		}
+
+	.payment-icon {
+		width: 30px;
+		height: 30px;
+		margin-right: 10px;
+	}
+
+</style>
+<div class="untree_co-section">
+	<div class="container">
+		<form method="post">
+		<div class="row">	
+			<div class="col-md-5">
+				<div class="row mb-5">
+					<div class="col-md-12">
+						<h2 class="h3 mb-3 text-black">Thông tin đơn hàng</h2>
+						<div class="p-3 p-lg-5 border bg-white">
+							<table class="table site-block-order-table mb-5">
+								<thead>
+								<th>Sản phẩm</th>
+								<th>Giá</th>
+								</thead>
+								<tbody>
+									@foreach (var product in Model.CartProducts)
+									{
+										<tr>
+											<td>@product.Product.PidNavigation.Pname <strong class="mx-2">x</strong> @product.Product.SidNavigation.Sname<strong class="mx-2">x</strong>@product.Quantity</td>
+											<td>@String.Format("{0:0,0}", @product.Product.PidNavigation.Price*@product.Quantity*(100-@product.Product.PidNavigation.Sale)/100) đ</td>
+												<input type="hidden" name="PsIds" value="@product.Product.Psid" />
+											<input type="hidden" name="soluong" value="@product.Quantity" />
+											<input type="hidden" name="price" value="@(product.Product.PidNavigation.Price*product.Quantity*(100-product.Product.PidNavigation.Sale)/100)" />
+										</tr>
+									}
+									@foreach (var product in Model.CartPk)
+									{
+										<tr>
+											<td>@product.Product.Pname <strong class="mx-2">x</strong>@product.Quantity</td>
+											<td>@String.Format("{0:0,0}", @product.Product.Price*@product.Quantity*(100-@product.Product.Sale)/100) đ</td>
+											<input type="hidden" name="Pid" value="@product.Product.Pid" />
+											<input type="hidden" name="soluong" value="@product.Quantity"/>
+											<input type="hidden" name="price" value="@(product.Product.Price*product.Quantity*(100-product.Product.Sale)/100)" />
+										</tr>
+									}
+									
+									<tr>
+										<td class="text-black font-weight-bold"><strong>Tổng cộng</strong></td>
+										<td class="text-black font-weight-bold"><strong>@String.Format("{0:0,0}", @Model.CartTotal) đ</strong></td>
+										<input type="hidden" name="totalamount" value="@Model.CartTotal" />
+									</tr>
+								</tbody>
+							</table>
+
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+				<div class="col-md-7 mb-5 mb-md-0">
+					<h2 class="h3 mb-3 text-black">Thông tin giao hàng</h2>
+					<div class="p-3 p-lg-5 border bg-white">
+						<div class="form-group row">
+							<div class="col-md-6">
+								<label for="c_fname" class="text-black">Họ tên <span class="text-danger">*</span></label>
+								<input type="text" class="form-control" id="c_fname" name="name" required>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-6">
+								<label for="c_fname" class="text-black">Số điện thoại <span class="text-danger">*</span></label>
+								<input type="text" class="form-control" id="c_fname" name="phone" required>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-12">
+								<label for="c_fname" class="text-black">Địa chỉ <span class="text-danger">*</span></label>
+								<input type="text" class="form-control" id="c_fname" name="address" required>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<div class="col-md-4">
+								<label for="c_fname" class="text-black">Tỉnh, Thành phố <span class="text-danger">*</span></label>
+								<select class="form-select form-select" id="city" aria-label=".form-select-sm" required>
+									<option value="" selected>Chọn tỉnh thành</option>
+								</select>
+								<input type="hidden" name="city" id="hiddenCity" />
+							</div>
+							<div class="col-md-4">
+								<label for="c_fname" class="text-black">Quận, Huyện <span class="text-danger">*</span></label>
+								<select class="form-select form-select" id="district" aria-label=".form-select-sm" required>
+									<option value="" selected>Chọn quận huyện</option>
+								</select>
+								<input type="hidden" name="district" id="hiddenDistrict" />
+							</div>
+							<div class="col-md-4">
+								<label for="c_fname" class="text-black">Xã, Phường <span class="text-danger">*</span></label>
+								<select class="form-select form-select" id="ward" aria-label=".form-select-sm" required>
+									<option value="" selected>Chọn phường xã</option>
+								</select>
+								<input type="hidden" name="ward" id="hiddenWard" />
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label for="c_order_notes" class="text-black">Ghi chú</label>
+							<textarea name="note" id="c_order_notes" cols="30" rows="5" class="form-control" placeholder="Viết ghi chú tại đây..."></textarea>
+						</div>
+						<div class="form-group">
+							<label for="c_order_notes" class="text-black">Phương thức thanh toán<span class="text-danger">*</span></label><br>
+							<div class="payment-option">
+								<input type="radio" id="cod" name="payment" value="cod" checked>
+								<label for="cod">
+									Thanh toán khi giao hàng (COD)
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-black btn-lg py-3 btn-block" type="submit">Đặt hàng</button>
+						</div>
+					</div>
+
+				</div>
+		</div>
+		</form>
+	</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+	var citis = document.getElementById("city");
+	var districts = document.getElementById("district");
+	var wards = document.getElementById("ward");
+	var Parameter = {
+		url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+		method: "GET",
+		responseType: "application/json",
+	};
+	var promise = axios(Parameter);
+	promise.then(function (result) {
+		renderCity(result.data);
+	});
+
+	function renderCity(data) {
+		for (const x of data) {
+			citis.options[citis.options.length] = new Option(x.Name, x.Id);
+		}
+		citis.onchange = function () {
+			district.length = 1;
+			ward.length = 1;
+			hiddenCity.value = this.options[this.selectedIndex].text;
+			if (this.value != "") {
+				const result = data.filter(n => n.Id === this.value);
+
+				for (const k of result[0].Districts) {
+					district.options[district.options.length] = new Option(k.Name, k.Id);
+				}
+			}
+		};
+		district.onchange = function () {
+			ward.length = 1;
+			hiddenDistrict.value = this.options[this.selectedIndex].text;
+			const dataCity = data.filter((n) => n.Id === citis.value);
+			if (this.value != "") {
+				const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+				for (const w of dataWards) {
+					wards.options[wards.options.length] = new Option(w.Name, w.Id);
+				}
+			}
+		};
+		wards.onchange = function () {
+			hiddenWard.value = this.options[this.selectedIndex].text;// Cập nhật giá trị input ẩn
+		};
+	}
+</script>

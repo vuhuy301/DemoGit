@@ -1,0 +1,172 @@
+﻿@page
+@model BilliardShop.Pages.Shop.ProductListModel
+@{
+}
+<!-- /*
+* Bootstrap 5
+* Template Name: Furni
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Untree.co">
+	<link rel="shortcut icon" href="favicon.png">
+
+	<meta name="description" content="" />
+	<meta name="keywords" content="bootstrap, bootstrap4" />
+</head>
+<style>
+	.content1 {
+		margin-bottom: 40px;
+		display: flex;
+	}
+
+	.category {
+		display: flex;
+		justify-content: center;
+	}
+
+	.sub-category {
+		margin: 5px;
+		padding: 5px 20px 5px 20px;
+		border-radius: 20px;
+		border: 2px solid rgb(255, 200, 0);
+		font-size: 16px;
+		cursor: pointer;
+	}
+
+		.sub-category:hover {
+			background-color: rgb(255, 200, 0);
+			color: rgb(0, 0, 0);
+		}
+
+	.selected {
+		background-color: rgb(255, 200, 0);
+		color: rgb(0, 0, 0);
+	}
+
+	.dropdown{
+		margin-right:10px;
+	}
+
+	.original-price {
+		text-decoration: line-through;
+		color: #888;
+		margin-right: 10px;
+	}
+</style>
+
+<body>
+	<div class="hero">
+		<div class="container">
+			<div class="row justify-content-between">
+				<div class="col-lg-5">
+					<div class="intro-excerpt">
+						<h1 style="color: rgb(83, 83, 83);">Store <span clsas="d-block"></span></h1>
+						<p style="color: rgb(102, 102, 102);" class="mb-4">Mang đến những chiếc áo thật là phong cách.</p>
+						<p><a href="" class="btn btn-secondary me-2">Mua ngay mua ngay!</a>
+					</div>
+				</div>
+				<div class="col-lg-7">
+					<div class="hero-img-wrap">
+						<img style="width: 1050px;" src="/images/banner4.png" alt="" srcset="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Hero Section -->
+	<div class="untree_co-section product-section before-footer-section">
+		<div class="container">
+			<div class="category">
+				<p class="sub-category" onclick="navigateToCategory(1)">Áo đấu</p>
+				<p class="sub-category" onclick="navigateToCategory(2)">Phụ kiện</p>
+				<p class="sub-category" onclick="navigateToCategory(3)">Bao cơ</p>
+				<p class="sub-category">Gậy</p>
+			</div>
+		</div>
+		<div class="container">
+			<div class="content1">
+				<div class="dropdown">
+					<button class="btn btn btn-secondary btn-sm dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+						Sắp xếp theo
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="sortDropdown">
+						<li><a class="dropdown-item" href="?sort=price-asc">Giá tăng dần</a></li>
+						<li><a class="dropdown-item" href="?sort=price-desc">Giá giảm dần</a></li>
+						<li><a class="dropdown-item" href="?sort=name-asc">Tên A-Z</a></li>
+						<li><a class="dropdown-item" href="?sort=name-desc">Tên Z-A</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="container">
+
+			<div class="row">
+				@foreach (var product in Model.Products)
+				{
+					<!-- Start Column 1 -->
+					<div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item" href="/Shop/ProductDetail?Pid=@product.Pid">
+							<img src="@product.ProductImgs.FirstOrDefault()?.Url" class="img-fluid product-thumbnail">
+							<h3 class="product-title">@product.Pname</h3>
+							<span class="original-price text-muted">@String.Format("{0:0,0}", @product.Price) đ</span>
+							<strong class="product-price">@String.Format("{0:0,0}", @product.Price*(100-@product.Sale)/100) đ</strong>
+
+							<span class="icon-cross">
+								<img src="/images/cross.svg" class="img-fluid">
+							</span>
+						</a>
+					</div>
+					<!-- End Column 1 -->
+				}
+
+			</div>
+		</div>
+	</div>
+
+
+	
+
+
+	<script src="js/bootstrap.bundle.min.js"></script>
+	<script src="js/tiny-slider.js"></script>
+	<script src="js/custom.js"></script>
+</body>
+<script>
+	document.querySelectorAll('.sub-category').forEach(item => {
+		item.addEventListener('click', function () {
+			document.querySelectorAll('.sub-category').forEach(p => p.classList.remove('selected'));
+			this.classList.add('selected');
+		});
+	});
+
+	function redirectToProductDetails(Pid) {
+		window.location.href = '/Shop/ProductDetail?Pid=' + Pid;
+	}
+
+	function navigateToCategory(id) {
+		window.location.href = '/Shop/ProductList?category=' + id;
+	}
+
+	window.onload = function () {
+		const urlParams = new URLSearchParams(window.location.search);
+		const category = urlParams.get('category');
+
+		if (category) {
+			const subCategory = document.querySelector('.sub-category:nth-child(' + category + ')');
+			if (subCategory) {
+				subCategory.classList.add('selected');
+			}
+		}
+	};
+</script>
+
+</html>
